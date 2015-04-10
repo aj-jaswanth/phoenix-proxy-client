@@ -180,17 +180,15 @@ public class GUI {
 						userName.setText(scanner.next());
 				}
 				scanner.close();
+				Main.localPort = Integer.parseInt(localPort.getText());
+				Main.serverAddress = serverAddress.getText();
+				Main.serverPort = Integer.parseInt(serverPort.getText());
+				Main.userName = userName.getText();
+				Main.password = password.getText();
 			}
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-
-		Main.localPort = Integer.parseInt(localPort.getText());
-		Main.serverAddress = serverAddress.getText();
-		Main.serverPort = Integer.parseInt(serverPort.getText());
-		Main.userName = userName.getText();
-		Main.password = password.getText();
-
 		settingsPanel.setVisible(false);
 		frame.setSize(400, 204);
 		frame.setVisible(true);

@@ -29,6 +29,8 @@ public class GUI {
 	private JTextField serverPort;
 	private JTextField userName;
 	private JTextField password;
+	private static char[] hexMap = { '0', '1', '2', '3', '4', '5', '6', '7',
+			'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
 	public void render() {
 		frame = new JFrame("Phoenix Client");
@@ -138,8 +140,7 @@ public class GUI {
 				try {
 					md = MessageDigest.getInstance("SHA1");
 					md.update(Main.password.getBytes());
-					String passwordHash = DatatypeConverter
-							.printBase64Binary(md.digest());
+					String passwordHash = getHexRepresentation(md.digest());
 					String custom = DatatypeConverter
 							.printBase64Binary((Main.userName + ":" + passwordHash)
 									.getBytes());
@@ -194,5 +195,16 @@ public class GUI {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	private static String getHexRepresentation(byte[] array) {
+		StringBuffer sb = new StringBuffer();
+		char c;
+		for (byte b : array) {
+			c = (char) b;
+			sb.append(hexMap[(c & 0xf0) >> 4]);
+			sb.append(hexMap[c & 0x0f]);
+		}
+		return sb.toString();
 	}
 }
